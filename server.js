@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Connect to MongoDB
-mongoose.connect("mongodb+srv://new:gbQpXuQAFZYofXy4@cluster0.welnru8.mongodb.net/?retryWrites=true&w=majority", {
+mongoose.connect("mongodb+srv://sc5112492:OyErUwiQImLU6CLS@cluster0.2qc8biz.mongodb.net/?retryWrites=true&w=majority", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -24,9 +24,9 @@ db.once("open", () => {
 
 // Configure Cloudinary
 cloudinary.config({
-  cloud_name: "dmhzsmx4p",
-  api_key: "715657491526421",
-  api_secret: "lbycLkJx0iKXdCK_vOy51AbCo-M",
+  cloud_name: "de0baexee",
+  api_key: "283323717259476",
+  api_secret: "6iU9Pf0oadvGnsRR04Gg2RtSgjg",
 });
 
 // Set up multer for file uploads
@@ -75,7 +75,7 @@ app.post("/upload", upload.single("image"), async (req, res) => {
     res.status(500).json({ error: "Failed to upload image" });
   }
 });
-app.post("/uploads", upload.array("images", 120), async (req, res) => {
+app.post("/uploads", upload.array("images", 200), async (req, res) => {
   try {
     // Upload images to Cloudinary and store in MongoDB
     const images = [];
