@@ -30,17 +30,7 @@ cloudinary.config({
 });
 
 // Set up multer for file uploads
-// const upload = multer({ dest: "uploads/" });
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "uploads/"); // Set the destination folder where uploaded images will be stored temporarily
-  },
-  filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9); // Generate a unique filename
-    cb(null, uniqueSuffix + "-" + file.originalname);
-  },
-});
-const upload = multer({ storage: storage });
+const upload = multer({ dest: "uploads/" });
 
 // Define a schema and model for the image
 const imageSchema = new mongoose.Schema({
@@ -73,30 +63,6 @@ app.post("/upload", upload.single("image"), async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Failed to upload image" });
-  }
-});
-app.post("/uploads", upload.array("images", 200), async (req, res) => {
-  try {
-    // Upload images to Cloudinary and store in MongoDB
-    const images = [];
-
-    for (const file of req.files) {
-      const result = await cloudinary.uploader.upload(file.path);
-      const newImage = new Image({
-      
-        category: req.body.category,
-        name: req.body.name,
-        imageUrl: result.secure_url,
-      });
-      const savedImage = await newImage.save();
-      images.push(savedImage);
-    }
-
-    // Respond with the saved image documents
-    res.json(images);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Failed to upload images" });
   }
 });
 
@@ -216,28 +182,6 @@ app.put("/images/:id", async (req, res) => {
     res.status(500).json({ error: "Failed to update image" });
   }
 });
-
-app.put("/allimages", async (req, res) => {
-  try {
-    const { name } = req.body;
-
-    // Update all images with the name "shubham" to "shubhamstudio"
-    const updatedImages = await Image.updateMany(
-      { name: "Lokendra-Yashanshi" },
-      { $set: { name: "Lokendra-Yashanshi (Delhi-ncr)" } }
-    );
-
-    if (updatedImages.nModified === 0) {
-      return res.status(404).json({ error: "No images found with the name 'shubham'" });
-    }
-
-    res.json({ message: "Images updated successfully" });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Failed to update images" });
-  }
-});
-
 
 // Delete an image
 app.delete("/images/:id", async (req, res) => {
