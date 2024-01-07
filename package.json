@@ -6,7 +6,6 @@
   "scripts": {
     "dev": "nodemon run dev",
     "test": "echo \"Error: no test specified\" && exit 1"
-  
   },
   "author": "",
   "license": "ISC",
@@ -17,6 +16,7 @@
     "express-fileupload": "^1.4.0",
     "mongoose": "^7.3.1",
     "multer": "^1.4.5-lts.1",
+    "multer-storage-cloudinary": "^4.0.0",
     "nodemon": "^2.0.22"
   }
 }

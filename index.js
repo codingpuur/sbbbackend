@@ -3,6 +3,8 @@ const multer = require("multer");
 const cloudinary = require("cloudinary").v2;
 const mongoose = require("mongoose");
 const cors = require("cors");
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
+
 
 // Set up Express server
 const app = express();
@@ -29,8 +31,18 @@ cloudinary.config({
   api_secret: "6iU9Pf0oadvGnsRR04Gg2RtSgjg",
 });
 
+
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  folder: "uploads", // Set the folder in Cloudinary where you want to store the images
+  allowedFormats: ["jpg", "png", "jpeg"],
+  transformation: [{ width: 500, height: 500, crop: "limit" }],
+});
+
+const upload = multer({ storage: storage });
+
 // Set up multer for file uploads
-const upload = multer({ dest: "uploads/" });
+// const upload = multer({ dest: "uploads/" });
 //shubham
 
 // Define a schema and model for the image
