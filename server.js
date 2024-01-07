@@ -31,6 +31,7 @@ cloudinary.config({
 
 // Set up multer for file uploads
 const upload = multer({ dest: "uploads/" });
+//shubham
 
 // Define a schema and model for the image
 const imageSchema = new mongoose.Schema({
